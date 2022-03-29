@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script typt="text/javascript" src="/js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+
+        <h2>{{n}}</h2>
+        <h2 v-big="n">{{n}}</h2>
+
+        <button @click="n++">n+1</button> <br><br>
+
+        <input type="text" v-fffbind="n">
+    </div>
+
+    <div id="root2">
+        <input type="text" v-global-bind="x"><br>
+        <button @click="x++">x+1</button>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+        // global command
+
+        // Vue.directive('big', function (element, binding) {
+        //     console.log(this);  //this pointing to window
+        //     element.innerText = binding.value * 10;
+        // })
+
+        Vue.directive('global-bind', {
+            bind(element, binding) {
+                element.value = binding.value;
+            },
+            inserted(element, binding) {
+                element.focus();
+                console.log('element was inserted');
+            },
+            update(element, binding) {
+                console.log('n was updated');
+                element.value = binding.value;
+                element.focus();
+            }
+        })
+
+        new Vue({
+            el: '#root2',
+            data: function () {
+                return {
+                    x: 1
+                }
+            }
+        })
+        const vm = new Vue({
+            data: function () {
+                return {
+                    n: 1
+                }
+            },
+            // local command, cannot be used in another Vue instance
+            directives: {
+                // 1.Method:把(绑定的元素、变量)作为两个参数传入
+                big(element, binding) {
+                    console.log(this);  //this pointing to window
+                    element.innerText = binding.value * 10;
+                },
+                // 2.Obj:
+                //      'big-number' has to add a pair of quataion mark when the command name contain hyphen
+                fffbind: {
+                    bind(element, binding) {
+                        element.value = binding.value;
+                    },
+                    inserted(element, binding) {
+                        element.focus();
+                        console.log('element was inserted');
+                    },
+                    update(element, binding) {
+                        console.log('n was updated');
+                        element.value = binding.value;
+                        element.focus();
+                    },
+                }
+            }
+
+        })
+        console.log(vm);
+        vm.$mount('#root');  // 挂载
+
+    </script>
+</body>
+
+</html>

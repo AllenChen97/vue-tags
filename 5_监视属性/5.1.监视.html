@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script typt="text/javascript" src="/js/vue.js"></script>
+</head>
+
+<body>
+
+    <div id ="root">
+        <h1>今天天气很{{feel}}</h1>
+        <!-- 
+            1.注意坑：
+                如果把{{feel}}删掉，点击切换之后feel属性改变了 
+                在develop tool里面因页面没有调用到feel属性，所以不去计算，依然保留改变前的值
+        -->
+
+        <button @click="change()">切换天气</button><br><br>
+
+        <!-- 2.代码不多的话可以直接写到@click里面 -->
+        <!-- <button @click="isHot = !isHot;">切换天气</button><br><br> -->
+        
+        <!-- 3.这样会报错，因为vm里面没有alert 也没有windows对象 -->
+        <!-- <button @click="alert(1)">切换天气</button><br><br> -->
+
+        <!-- 5.深度监视 -->
+        <input type="text" v-model="numbers.a"><br>
+        <input type="text" v-model="numbers.b">
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+        const vm = new Vue({
+            data:function(){ 
+                return {
+                    isHot:true,
+                    numbers:{
+                        a:1,b:2
+                    }
+                }
+            },
+            methods:{
+                change(){
+                    this.isHot = !this.isHot;
+                }
+            },
+            computed:{
+                feel(){
+                    return this.isHot ? '炎热' : '凉爽';
+                }
+            },
+            watch:{
+                feel:{
+                    immediate:true,  //初始化的时候调用一下，平时不用
+                    handler(newValue,oldValue){
+                        console.log(oldValue,'修改成：',newValue);
+                    }
+                },
+                // 深度监视方法1
+                // 'numbers.a':{
+                //     immediate:true,  //初始化的时候调用一下，平时不用
+                //     handler(newValue,oldValue){
+                //         console.log(oldValue,'修改成：',newValue);
+                //     }
+                // }
+
+                // 深度监视方法2
+                numbers:{
+                    deep:true,  
+                    handler(newValue,oldValue){
+                        console.log(oldValue,'修改成：',newValue);
+                    }
+                }
+                // 简写:如不需要其他配置项，只需要handler
+                // numbers(newValue,oldValue){
+                //         console.log(oldValue,'修改成：',newValue);
+                // }
+            }
+        })
+        vm.$mount('#root');  // 挂载
+
+        // 4.第二种监视:在一开始不知道监视谁的时候使用，反之用vm的配置属性
+        // vm.$watch('feel',{
+        //     immediate:true,  //初始化的时候调用一下，平时不用
+        //     handler(newValue,oldValue){
+        //         console.log(oldValue,'修改成：',newValue);
+        //     }
+        // });  
+
+        // 4.简写
+        // vm.$watch('feel',function(newValue,oldValue){
+        //         console.log(oldValue,'修改成：',newValue);
+        //     }
+        // });  
+    </script>
+</body>
+
+</html>

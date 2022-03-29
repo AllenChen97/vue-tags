@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script typt="text/javascript" src="/js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+        4.事件修饰符，可以叠着用：
+            prevent 阻止默认事件，例如阻止a href跳转（常用） 
+            stop 阻止事件冒泡,见案例 只触发按钮 而不触发div的事件（常用） 
+            once 多次点击统一按钮 只触发一次（常用） 
+            capture 使用事件捕获方式，让其在捕获的时候就处理，而不是在冒泡的时候
+            self 只有event.target是当前操作的元素时才出发事件
+            passive 事件的默认行为立即执行，无需等待事件回调执行完毕
+        5.滚动条
+            @scroll 
+            @wheel  鼠标滚轮
+                默认先处理事件，再滑动滚动条。如果要先动滚动条再处理响应事件，就加passive
+                常用于移动端，保证流畅性
+     -->
+    <div id ="root">
+        <h2>{{name}}</h2>
+        <button v-on:click="showInfo1">瑶瑶大傻逼</button><br>
+
+        <!-- 1. 简写@click -->
+        <button @click="showInfo2(666,$event)">瑶瑶大傻逼</button>
+
+        <!-- 4.事件修饰符 -->
+        <!-- 4.1.stop（常用） -->
+        <div @click="showInfo1">
+            <button @click.stop="showInfo2(666,$event)">冒泡</button>
+        </div>
+        <!-- 4.2.once（常用） -->
+        <button @click.once="showInfo1">一次</button>
+
+        <!-- 4.3.正常是冒泡阶段处理触发事件;如果想要在捕获阶段就处理，就要加@click.capture -->
+        <div @click.capture="printNum(1)">
+            div1
+            <div @click="printNum(2)">div2</div>
+        </div>
+
+        <!-- 
+            4.4. 点击div2的时候会因冒泡也触发div1的事件，但触发对象是div2
+            当需要触发对象是自己 才处理，就要加@click.self 
+            注：不知道和stop的区别。。。
+        -->
+        <div @click.self="printSelf">
+            div1
+            <div @click="printSelf">div2</div>
+        </div>
+        
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+        const vm = new Vue({
+            data:function(){ 
+                return {
+                    name:'Allen',
+                }
+            },
+            methods:{
+                // 2.最好都写成普通函数，不要写成 shwoInfo:()=>{xxx}
+                showInfo1(event){
+                    console.log(this);      // Vue
+                },
+                // 3.传参，$event 参数占位
+                showInfo2(number,e){
+                    console.log(e.target.innerText);  // button的内容
+                    console.log(number);  
+                },
+                printNum(number){
+                    console.log(number);  // button的内容
+                },
+                printSelf(){
+                    console.log(event.target);  // button的内容
+                }
+            }
+        })
+        console.log(vm);
+        vm.$mount('#root');  // 挂载
+
+    </script>
+</body>
+
+</html>

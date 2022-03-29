@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script typt="text/javascript" src="/js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+        vm在加载data时，给每个属性都创建了一个getter setter 
+        在调用VM属性的时候 读取_data里面的属性
+        
+        以实现vm属性发生改变的时候，_data的数据也会发生变化
+
+        vm.name = 'bbbbb'
+        vm._data.name
+
+        让操作数据的时候更加方便，不需要用vm._data.name来调用数据
+     -->
+    <div id ="root">
+        <h2>{{name}}</h2>
+
+
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+
+        let data = {
+            name:'Allen',
+        }
+
+        const vm = new Vue({
+            data:data
+        })
+
+        console.log(vm);
+        vm.$mount('#root');  // 挂载
+
+    </script>
+</body>
+
+</html>

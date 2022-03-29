@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script typt="text/javascript" src="/js/vue.js"></script>
+</head>
+
+<body>
+<!-- 
+    3.数据劫持（概念）
+        当数据发生修改时，vm生成的setter会劫持住这个操作，进行自己的操作
+ -->
+    <div id ="root">
+        <h1>{{firstName | myFilter}}</h1>
+        <h1>{{firstName | myFilter(4)}}</h1>
+
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+
+        // global filter
+        Vue.filter('myFilter',function(value,num=3){
+            return val.slice(0,num);
+        })
+
+        // local filter, cannot be used in another Vue instance
+        const vm = new Vue({
+            data:function(){ 
+                return {
+                    firstName:'Allen',
+                }
+            },
+            filters:{
+                myFilter(val,num=3){
+                    return val.slice(0,num);
+                }
+            }
+        })
+        console.log(vm);
+        vm.$mount('#root');  // 挂载
+
+    </script>
+</body>
+
+</html>

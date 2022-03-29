@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="/js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+        modular
+        component:
+            ease code management
+            simplify code
+    -->
+    <div id="root">
+        <school></school> 
+        <!-- <school/> work in cli -->
+
+        <hr>
+        <student></student> 
+    </div>
+
+    <div id="root2">
+        <school></school> 
+    </div>
+
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+
+        //local register
+        const school = Vue.extend({
+            // el: '#root', //don't bind element with component, let vm instance do it
+            template:`
+            <h1>{{school}}</h1>
+            `,
+            data: function () {
+                return {
+                    school: 'aaaa'
+                }
+            }
+        });
+        const student = Vue.extend({
+            template:`
+            <h1>{{student}}</h1>
+            `,
+            data: function () {
+                return {
+                    student: 'bbb'
+                }
+            }
+        });
+
+        // Simplified
+        // const stu = {
+        //     // el: '#root', //don't bind element with component, let vm instance do it
+        //     template:`
+        //     <h1>{{student}}</h1>
+        //     `,
+        //     data: function () {
+        //         return {
+        //             student: 'bbb'
+        //         }
+        //     }
+        // };
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                opacity: 1,
+            },
+            components: {
+                school,
+                student
+            }
+        })
+
+        //global register
+        Vue.component('school',school)
+        Vue.component('student',student)
+        new Vue({
+            el: '#root2',
+        })
+
+
+    </script>
+</body>
+
+</html>

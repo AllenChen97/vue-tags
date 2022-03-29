@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script typt="text/javascript" src="/js/vue.js"></script>
+</head>
+
+<body>
+
+    <div id ="root">
+        <input type="text" v-model="firstName"><br><br>
+        <input type="text" v-model="lastName"><br><br>
+        <input type="text" v-model="elseName"><br><br>
+
+        <!-- 1.插值实现 -->
+        <h2>{{firstName}}-{{lastName}}</h2>
+
+        <!-- 2.函数实现,没有缓存 调用多次会进行多次计算 -->
+        <h2>{{printName()}}</h2>
+
+        <!-- 
+            3.计算属性实现
+            原理：底层借助Object.defineproperty方法提供的getter和setter
+            与函数相比：
+                3.1.因有缓存机制（一次计算复用多次），多次调用该属性也只执行一次，只有所依赖的属性发生变化时才执行。
+                3.2.计算属性会出现在vm身上，直接调用即可，不需要fullname.get() 会报错
+         -->                                        
+        <h2>{{fullname}}</h2>
+        
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+        const vm = new Vue({
+            data:function(){ 
+                return {
+                    firstName:'Allen',
+                    lastName:'Chen'
+                }
+            },
+            methods:{
+                printName(){
+                    return this.firstName + '-' + this.lastName;  // 方法2
+                },
+            },
+            computed:{
+                fullname:{
+                    get(){
+                        console.log('fullname was invoke');
+                        return this.firstName + '-' + this.lastName;    // 方法3
+                    },
+                    set(newName){
+                        console.log('fullname was set');
+                        const spl = newName.split('-');
+                        this.firstName = spl[1];
+                        this.lastName = spl[0];
+                    }
+                }
+                // 如果不需要修改的话，就可以如下简写
+                // fullname(){
+                //     console.log('fullname was invoke');
+                //     return this.firstName + '-' + this.lastName;    // 方法3
+                // }
+            }
+        })
+        console.log(vm);
+        vm.$mount('#root');  // 挂载
+
+    </script>
+</body>
+
+</html>

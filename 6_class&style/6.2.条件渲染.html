@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script typt="text/javascript" src="/js/vue.js"></script>
+
+</head>
+
+<body>
+
+    <div id ="root">
+        <h1>N的值为：{{n}}</h1>
+        
+        <!-- 变法频率高 -->
+        <div v-show="false">v-show</div>
+        <!-- 直接把html干没，需要挨在一起不允许被打断 -->
+        <div v-if="n == 1">v-if</div>
+        <div v-else-if="n == 2">v-else-if</div>
+        <!-- <div>隔断</div> -->
+        <div v-else>v-else</div>
+
+        <button @click="add">n+1</button>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+        const vm = new Vue({
+            data:function(){ 
+                return {
+                    n:0
+                }
+            },
+            methods:{
+                add(){
+                    this.n+=1;
+                }
+            },
+        })
+        vm.$mount('#root');  // 挂载
+
+    </script>
+</body>
+
+</html>

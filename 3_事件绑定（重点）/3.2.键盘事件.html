@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script typt="text/javascript" src="/js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+        如果同时按下多个按键，keyup要所有案件松开才触发
+
+        键：
+            enter/delete/esc/space
+            tab -- 要用keydown
+            up/down/left/right
+            caps-lock
+        还可以：
+            @keyup.ctrl.1
+     -->
+    <div id ="root">
+        <input type="text" @keyup="printValue">
+        <br>
+        <input type="text" @keyup="printCode">
+        
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+        Vue.config.keyCodes.dashabiyaoyao = 13 //自定义按键别名，一般不用 系统的都够用了 
+
+        const vm = new Vue({
+            data:function(){ 
+                return {
+                }
+            },
+            methods:{
+                printValue(e){
+                    console.log(e.target.value);  
+                },
+                printCode(e){
+                    console.log(e.key,e.keyCode);  // 键和按键
+                }
+            }
+        })
+        console.log(vm);
+        vm.$mount('#root');  // 挂载
+
+    </script>
+</body>
+
+</html>

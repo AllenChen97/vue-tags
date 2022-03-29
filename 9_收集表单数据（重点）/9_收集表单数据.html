@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script typt="text/javascript" src="/js/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="root">
+        <!-- 组织提交按钮的默认清空信息的行为 -->
+        <form @submit.prevent="demo">
+            <!-- text, v-model.trim 清除前后字符串-->
+            账号<input type="text" v-model.trim="userInfo.account"><br>
+            密码<input type="text" v-model.trim="userInfo.passowrd"><br><br>
+
+            <!-- 数字number，配合v-model.number使用 -->
+            年龄<input type="number" v-model.number="userInfo.age"><br>
+
+            <!-- 单选 -->
+            性别：
+            男<input type="radio" name="sex" v-model="userInfo.sex" value=1>
+            女<input type="radio" name="sex" v-model="userInfo.sex" value=0><br><br>
+
+            <!-- 多选checkbox，绑定的数据类型是数组 -->
+            爱好<br>
+            抽烟<input type="checkbox" v-model="userInfo.hobbies" value="抽烟">
+            喝酒<input type="checkbox" v-model="userInfo.hobbies" value="喝酒">
+            打麻将<input type="checkbox" v-model="userInfo.hobbies" value="打麻将">
+            
+            <!-- 下拉 -->
+            <br><br>地区
+            <select v-model="userInfo.area">
+                <option value="BJ">北京</option>
+                <option value="SH">上海</option>
+                <option value="SZ">深圳</option>
+                <option value="GZ">广州</option>
+            </select>
+            <br>
+
+            <!-- 输入框,v-model.lazy写完在更新信息 -->
+            其他信息<textarea v-model.lazy="userInfo.otherInfo"></textarea><br>
+            <!-- 勾选框 -->
+            <input type="checkbox" v-model="userInfo.readAccpet">阅读并接受<br><br>
+            <button>提交</button>
+
+        </form>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+        const vm = new Vue({
+            data: function () {
+                return {
+                    userInfo: {
+                        account: '370553364',
+                        passowrd: '541236987',
+                        age: '',
+                        sex: '',
+                        hobbies: [],
+                        area: '',
+                        otherInfo: '',
+                        readAccpet: ''
+                    }
+
+                }
+            },
+
+        })
+        console.log(vm);
+        vm.$mount('#root');  // 挂载
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script typt="text/javascript" src="/js/vue.js"></script>
+
+</head>
+
+<body>
+    <!-- 1.数组 /Obj -->
+    <div id ="root">
+    <ul>
+        <li v-for="p in persons" :key="p.id">
+            {{p.id}} - {{p.name}}
+        </li>
+    </ul>
+    <!-- 2.String -->
+    <ul>
+        <li v-for="(s,index) in str" :key="index">
+            {{index}} ： {{s}}
+        </li>
+    </ul>
+    <!-- 3.int -->
+    <ul>
+        <li v-for="(i,index) in 3" :key="index">
+            {{index}} ： {{i}}
+        </li>
+    </ul>
+
+    <!-- 4.两基本参数,可以写of/in -->
+    <ul>
+        <li v-for="(p,index) in persons" :key="index">
+            {{index}} ： {{p.id}} - {{p.name}}
+        </li>
+    </ul>
+
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+        const vm = new Vue({
+            data:function(){ 
+                return {
+                    str:'asd',
+                    persons:[                        
+                        {id:01,name:'Allen'},
+                        {id:02,name:'Kenny'},
+                        {id:03,name:'c'}
+                    ]
+                }
+            }
+        })
+        vm.$mount('#root');  // 挂载
+
+    </script>
+</body>
+
+</html>

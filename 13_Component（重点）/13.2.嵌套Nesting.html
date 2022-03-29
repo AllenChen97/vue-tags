@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="/js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <app></app> 
+    </div>
+
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+
+        const student = {
+            template:`
+            <h2>{{student}}</h2>
+            `,
+            data: function () {
+                return {
+                    student: 'Allen'
+                }
+            }
+        };
+        const school = {
+            template:`
+            <div>
+                <h2>{{school}}</h2>
+                <student></student> 
+            </div>
+
+            `,
+            data: function () {
+                return {
+                    school: 'Fenshui'
+                }
+            },
+            components:{student}
+        };
+        const hello = {
+            template:`
+            <h2>welcome</h2>
+            `
+        };
+
+        // Using for managing comonents
+        const app = {
+            template:`
+            <div>
+                <school></school>
+                <hello></hello>    
+            </div>
+            `,
+            components:{
+                hello,school // if there is many other components...
+            }
+        };
+
+        const vm = new Vue({
+            el: '#root',
+            components: {app}
+        })
+    </script>
+</body>
+
+</html>

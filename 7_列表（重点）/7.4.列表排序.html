@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script typt="text/javascript" src="/js/vue.js"></script>
+
+</head>
+
+<body>
+    <div id ="root">
+    <ul>
+        <li v-for="p in pFilted" :key="p.id">
+            {{p.id}} - {{p.name}}
+        </li>
+    </ul>
+
+    <input type="text" placeholder="input keyword" v-model="keyword">
+
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+        const vm = new Vue({
+            data:function(){ 
+                return {
+                    sortType:true,
+                    keyword:'',
+                    persons:[                        
+                        {id:01,name:'Allen',age:18},
+                        {id:02,name:'Kenny',age:24},
+                        {id:03,name:'c',age:24}
+                    ],
+                }
+            },
+            computed:{
+                pFilted(){
+                    const arr = this.persons.filter((p)=>{
+                            return p.name.indexOf(this.keyword) != -1;
+                    })
+                    if(this.sortType){
+                        arr.sort((p1,p2)=>{
+                            return this.sortType === true ? p2.age - p1.age : p1.age - p2.age
+                        })
+                    }
+                }
+            }
+        })
+        vm.$mount('#root');  // 挂载
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script typt="text/javascript" src="/js/vue.js"></script>
+</head>
+
+<body>
+<!-- 
+    3.数据劫持（概念）
+        当数据发生修改时，vm生成的setter会劫持住这个操作，进行自己的操作
+ -->
+    <div id ="root">
+        <h1>{{firstName}} {{lastName}}</h1>
+        <h2>{{fullname}}</h2>
+
+        <ul>
+            <li v-for="(h,index) in hobbies" :key="index">
+                {{h}}
+            </li>
+        </ul>
+
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+        const vm = new Vue({
+            data:function(){ 
+                return {
+                    firstName:'Allen',
+                    lastName:'Chen',
+                    // 1.如要新增一个stages里面的键值对:
+                    //      Vue.set(vm.stages,key,value) 或 this.$set(vm.stages,key,value)
+                    // 否则无法生成getter和setter,数据修改了无法更新页面信息
+
+                    // 原理还是《2.数据代理》中讲的Object.defineProperty 实现的
+                    // https://www.bilibili.com/video/BV1Zy4y1K7SH?p=35
+
+                    // 但Vue.set()无法直接操作vm下面的属性，只能操作vm里面的obj或arr
+                    stages:{
+                        bachelors:true,
+                        master:false
+                    },
+
+                    // 2.array 元素修改！！ 
+                    // hobit[0] = 'xxx' 无法被Vue更新
+                    // push shift unshift pop splice sort reverse才有用
+                    // Vue用的不是Array. 原来的方法，是Vue包装过的
+                    hobbies:['赚钱','打机','整瑶瑶']
+                }
+            },
+
+        })
+        console.log(vm);
+        vm.$mount('#root');  // 挂载
+
+    </script>
+</body>
+
+</html>

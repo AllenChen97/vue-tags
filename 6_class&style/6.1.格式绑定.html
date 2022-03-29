@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script typt="text/javascript" src="/js/vue.js"></script>
+    <style>
+        .basic{
+            border:4px;
+            margin:6px;
+        }
+        .normal{
+            background-color:aquamarine;
+        }
+        .happy{
+            background-color:blueviolet;
+        }
+        .sad{
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id ="root">
+        <!-- 1. 适用于要绑定的样式个数不肯定、名字也不确定 -->
+        <div class="basic" :class="mood" @click="change">vm属性 随机抽取一个mood实现</div>
+
+        <div class="basic" :class="mood1">数组实现</div>
+
+        <div class="basic" :class="mood2">Obj实现</div>
+
+        <!-- 2. 适用于要绑定的样式个数、名字也确定，但要动态决定用不用 -->
+        <div class="basic" :style="{fontSize: fsize+'px'}">块</div>
+        <!-- 优化：放到Obj里 -->
+        <div class="basic" :style="styleObj">块</div>
+        <!-- 下面少用 -->
+        <div class="basic" :style="[styleObj,styleObj2]">块</div>
+
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+        const vm = new Vue({
+            data:function(){ 
+                return {
+                    mood:"normal",
+                    mood1:["normal","happy","sad"],
+                    mood2:{normal:false,
+                        happy:true,
+                        sad:false
+                    },
+
+                    fsize:40,
+                    styleObj:{
+                        fontSize: 40 + 'px',
+                    },
+                    styleObj2:{
+                        color:'red',
+                        backgroupColor:'orange'
+                    }
+                }
+            },
+            methods:{
+                change(){
+                    const i = Math.floor(Math.random()*3);
+                    this.mood = this.mood1[i];
+                }
+            },
+        })
+        vm.$mount('#root');  // 挂载
+
+    </script>
+</body>
+
+</html>

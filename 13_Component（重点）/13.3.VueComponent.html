@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="/js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+        Vue.prototype = VueComponent.prototype.__prototype__ 
+        So, things put in Vue.prototype can be accessed by any vc or vm instance
+        ps: vc means components instance
+    -->
+    <div id="root">
+        <student></student> 
+    </div>
+
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+
+        const student = {
+            template:`
+            <h2>{{student}}</h2>
+            `,
+            data: function () {
+                return {
+                    student: 'Allen'
+                }
+            }
+        };
+
+        // VueComponent have the same inpu with vm but can not define el attribute
+        console.log('@',student); 
+
+        const vm = new Vue({
+            el: '#root',
+            components: {student}
+        })
+    </script>
+</body>
+
+</html>

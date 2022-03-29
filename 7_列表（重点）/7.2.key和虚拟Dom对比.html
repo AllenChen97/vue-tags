@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script typt="text/javascript" src="/js/vue.js"></script>
+
+</head>
+
+<body>
+    <!-- key给节点标识 -->
+    <div id ="root">
+    <ul>
+        <li v-for="p in persons" :key="p.id">
+            {{p.id}} - {{p.name}}
+        </li>
+    </ul>
+<!-- 
+    1.虚拟Dom中key的作用：
+        key是虚拟Dom对象的标识，数据发生变化时，Vu而根据新的数据生成新的虚拟Dom，
+        随后对新旧Dom进行对比
+    
+    2.对比规则
+        2.1.在旧Dom中找到了key
+            1.Dom中内容没变，直接使用旧Dom
+            2.Dom中内容变了，生成新的真实Dom替换原页面的
+        2.2.没找到key
+            1.生成新的真实Dom，添加到页面
+    
+    3.index做key引发的问题
+        3.1.对数据逆序添加删除会导致没必要的真实Dom更新：界面无误，但效率低
+        3.2.如果结构中还包含输入类的Dom：会产生错误的Dom更新，页面出错
+            视频案例：https://www.bilibili.com/video/BV1Zy4y1K7SH?p=30&spm_id_from=pageDriver
+        
+        注：如不存在逆序操作，仅用于展示可以不写:key; 
+            否则最好以数据唯一ID作为key。
+
+ -->
+
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+        const vm = new Vue({
+            data:function(){ 
+                return {
+                    persons:[                        
+                        {id:01,name:'Allen'},
+                        {id:02,name:'Kenny'},
+                        {id:03,name:'c'}
+                    ]
+                }
+            },
+
+        })
+        vm.$mount('#root');  // 挂载
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script typt="text/javascript" src="/js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+        https://www.bilibili.com/video/BV1Zy4y1K7SH?p=34
+        vm拿到data之后:
+            1.加工data，监视数据变化时更新页面
+                1.1.VM基于下面模拟的Observer 还做了数据代理，
+                    可以直接更改vm.name 而不需要 vm._data.name；
+                1.2.另外多层级的obj还做了无限递归。
+                
+            2.vm._data = vm.data
+
+    -->
+    <div id ="root">
+    </div>
+
+    <script>
+        let data = {
+            name:'Allen',
+            address:'Gz'
+        }
+
+        // 监视实例对象，用于检测data中的数据变化
+        const obs = new Observer(data);
+        console.log(obs);
+
+        let vm = {};
+        vm._date = data = obs;
+
+        function Observer(obj){
+            const keys = Object.keys(obj)
+            keys.forEach((k)=>{
+                Object.defineProperty(this,k,{
+                    get(){
+                        console.log(`${k}数据被读取`);
+                        return obj[k]
+                    },
+                    set(val){
+                        console.log(`${k}数据被修改,准备解析模板，生成虚拟Dom，做对比...`);
+                        obj[k] = val;
+                    }
+                })
+            })
+        }
+    </script>
+</body>
+
+</html>

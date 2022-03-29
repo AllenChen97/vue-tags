@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script typt="text/javascript" src="/js/vue.js"></script>
+
+</head>
+
+<body>
+    <div id ="root">
+    <ul>
+        <li v-for="p in pFilted" :key="p.id">
+            {{p.id}} - {{p.name}}
+        </li>
+    </ul>
+
+    <input type="text" placeholder="input keyword" v-model="keyword">
+
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+        const vm = new Vue({
+            data:function(){ 
+                return {
+                    keyword:'',
+                    persons:[                        
+                        {id:01,name:'Allen',age:18},
+                        {id:02,name:'Kenny',age:24},
+                        {id:03,name:'c',age:24}
+                    ],
+                }
+            },
+            // 方法1：需要加载时运行 要额外加immediate
+            watch:{
+                keyword:{
+                    immediate:true,
+                    handler(val){   //新值
+                        this.pFilted = this.persons.filter((p)=>{
+                            return p.name.indexOf(val) != -1;
+                        })
+                    }
+                }
+            },
+            // 方法2:更精炼
+            computed:{
+                pFilted(){
+                    return this.persons.filter((p)=>{
+                            return p.name.indexOf(this.keyword) != -1;
+                    })
+                }
+            }
+        })
+        vm.$mount('#root');  // 挂载
+
+    </script>
+</body>
+
+</html>

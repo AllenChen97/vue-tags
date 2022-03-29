@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <!-- 1.Vue引入 -->
+    <script typt="text/javascript" src="/js/vue.js"></script>
+</head>
+
+<body>
+    <div id ="root">
+        <!-- 2.插值赋值 -->
+        <h2>{{address.toUpperCase()}}</h2>
+        <h2>{{Date.now()}}</h2>
+
+        <!-- 3.插值通常给内容赋值，数据绑定通常给标签属性赋值 -->
+
+        <!-- 4.1. v-model只能用于 表单类输入数据的绑定，如input select等 -->
+        <!-- 4.2.v-band是单向绑定，v-model是双向 -->
+        <a v-bind:href="website.url">direct to {{website.name}}</a> | 
+        <input type="text" v-model:value="website.name"><br><br>
+
+
+        <!-- 简写 -->
+        <a :href="website.url">direct to {{website.name}}</a> | 
+        <input type="text" v-model="website.name"><br><br>
+
+
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+
+        // 第一种方法：关联Vue实例和容器
+        // new Vue({
+        //     el:'#root', // Vue实例和div容器是1:1的关系
+        //     data:{      // data第一种写法：对象式
+        //         address:'Guangzhou',
+        //         website:{
+        //             name:'google',
+        //             url:'http://google.com'
+        //         }
+        //     }
+        // })
+
+        // 第二种方法：关联操作更灵活
+        const vm = new Vue({
+            data:function(){      // data第二种写法：普通函数式
+                return {
+                    address:'Guangzhou',
+                    website:{
+                        name:'google',
+                        url:'http://google.com'
+                    }  
+                }
+
+            }
+        })
+        console.log(vm);
+        vm.$mount('#root');  // 挂载
+
+        // setTimeout(() => {
+        //     vm.$mount('#root');  
+        // }, 1000);
+
+    </script>
+</body>
+
+</html>

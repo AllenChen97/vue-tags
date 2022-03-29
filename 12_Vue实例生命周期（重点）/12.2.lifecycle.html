@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="/js/vue.js"></script>
+</head>
+
+<body>
+<!-- create => amount => update => destroy -->
+    <div id="root">
+        <h1 :style="{opacity}">{{opacity}}</h1>
+    </div>
+
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                opacity: 1,
+            },
+            beforeCreate() {
+                console.log(this);  // no data 
+                debugger;
+            },
+            // 1. Create: data agent and monitor
+            created(){
+                console.log(this); 
+                debugger;
+            },
+
+            // Deal with el, template; Generate virtual dom in memory !!
+            beforeMount() {
+                //has no real dom, therefore the operation to dom dosen't work here!!
+            },
+            // 2. Mount: put the real dom on the page !!!
+            mounted() {
+                setInterval(() => {
+                    vm.opacity -= 0.01;
+                    if (vm.opacity <= 0) vm.opacity = 1;
+                }, 16)
+                // even has real dom, avoid operating dom here
+                // Normally: set Interval, set request, subscribe message, bind customised event, etc init operation
+            },
+
+            beforeUpdate() {
+                // even data has changed, but page hasn't updated
+                // which means model-->view
+            },
+            // 3. Update: virtual dom re-render and patch 
+            updated() {
+                console.log('page has updated');
+            },
+            
+            beforeDestroy() {
+                // all attributes and methods can be use, but usually not
+                // update data here would not trigger the update process
+                
+                // Normally: close Interval,unsubsrcibe message,unbind the cusomised event !!!
+                clearInterval(this.timer);
+            },
+            // 4. Destroy: native event listening still remain, 
+            //      the customised events, attributes on VC/VM will lose
+            destroyed() {
+                
+            }
+        })
+
+    </script>
+</body>
+
+</html>

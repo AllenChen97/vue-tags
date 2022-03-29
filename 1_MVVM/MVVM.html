@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script typt="text/javascript" src="/js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+        MVVM
+            Model: data 数据
+            Viewmodel: Vue实例通过Dom Listenner 和 Data Blinding 链接数据和模板
+            View: HTML 模板
+        data
+            加载Vue对象的时候会自动把data里面的数据都放到vm身上
+     -->
+    <div id ="root">
+        <!-- 2.插值赋值 -->
+        <h2>{{address.toUpperCase()}}</h2>
+        <h2>{{Date.now()}}</h2>
+
+
+    </div>
+
+    <script>
+        Vue.config.productionTip = false
+        const vm = new Vue({
+            data:function(){ 
+                return {
+                    address:'Guangzhou',
+                    website:{
+                        name:'google',
+                        url:'http://google.com'
+                    }  
+                }
+
+            }
+        })
+        console.log(vm);
+        vm.$mount('#root');  // 挂载
+
+    </script>
+</body>
+
+</html>

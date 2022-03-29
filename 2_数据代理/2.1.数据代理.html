@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <!-- <script typt="text/javascript" src="/js/vue.js"></script> -->
+</head>
+
+<body>
+    <!-- 
+        数据代理：通过对象代理，实现操作(读/写)另一个对象中的属性
+        需求：让年龄改变的时候自动改变person里面的属性值
+     -->
+
+
+    </div>
+
+    <script>
+        let number;
+        let person = {
+            name:'Allen',
+            sex:'male',
+            // age:number
+        }
+
+        Object.defineProperty(person,'age',{
+            // value:24,
+
+            // get:function(){
+            //     return number;
+            // },
+
+            get(){
+                return number;
+            },
+            set(value){
+                number = value;
+            },
+            enumerable:true,
+            // writable:true,
+            configurable:true
+        })
+
+    </script>
+</body>
+
+</html>
